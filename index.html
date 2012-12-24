@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+    <title>jquery.esn.autobrowse</title>
+    <style type="text/css">
+      ul {
+        list-style-type: none;
+      }
+      li {
+        float: left;
+        padding: 10px;        
+      }
+      li img {
+        max-width: 150px;
+        max-height: 150px;
+      }
+    </style>
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="jquery.infiniteScroller.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var trfh = [], truid = [], trsub = [], trsrv = [], ntrend;
+      var page = 0;
+
+      $(function(){
+        $('#container').infiniteScroller({
+            ajax: { 
+                url: "http://api.flickr.com/services/rest/?jsoncallback=?", 
+                dataType: "jsonp", 
+                data: { 
+                  format: 'json',
+                  sort: 'random',
+                  method: 'flickr.photos.search',
+                  tags: 'nature,alpes',
+                  tag_mode: 'all',
+                  api_key: '66c61b93c4723c7c3a3c519728eac252',
+                  per_page: 10
+                } 
+            },    
+            heightOffset: 100,     
+            pageOffset: "page",   
+            getPage: function() {
+                return page++;
+            },
+            onComplete: function(result) {
+              $(result.photos.photo).each(function(key, photo) {
+                  t_url = "http://farm" + photo.farm +
+                   ".static.flickr.com/" + photo.server + "/" +
+                   photo.id + "_" + photo.secret + "_" + "m.jpg";                  
+                    
+                    $('#container').append(
+                        $('<li/>').append(
+                            $('<img/>').attr(
+                                { alt: photo.title, src: t_url }
+                            )
+                        )
+                    );
+              })
+            }
+        });
+      });
+
+
+    </script>
+</head>
+<body>
+
+<ul id="container" style="width: 400px; height: 400px; background-color: gray; overflow-y: scroll;">
+</ul>
+
+</body>
+</html>

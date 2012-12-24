@@ -1,0 +1,9 @@
+h1. jQuery infiniteScroller
+
+h2. Demo
+
+"http://vashik.github.com":http://vashik.github.com
+
+h2. Using
+
+see __index.html__
